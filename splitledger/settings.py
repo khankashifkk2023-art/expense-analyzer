@@ -72,19 +72,12 @@ WSGI_APPLICATION = 'splitledger.wsgi.application'
 # Uses MySQL via mysqlclient. Credentials loaded from .env.
 # STRICT_TRANS_TABLES prevents silent data truncation.
 
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', 'splitledger'),
-        'USER': os.getenv('DB_USER', 'root'),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
-        'PORT': os.getenv('DB_PORT', '3306'),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-        'CONN_MAX_AGE': 600,  # Reuse connections for up to 10 minutes
-    }
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL")
+    )
 }
 
 # ── Password validation ────────────────────────────────────────────────────
