@@ -8,6 +8,7 @@ See .env.example for the full list of environment variables.
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url
 
 # ── Paths ───────────────────────────────────────────────────────────────────
 
@@ -20,9 +21,13 @@ load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-change-me')
 
+
 DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = os.getenv(
+    'ALLOWED_HOSTS',
+    'localhost,127.0.0.1'
+).split(',')
 
 # ── Application definition ─────────────────────────────────────────────────
 
@@ -45,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'splitledger.urls'
@@ -67,23 +73,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'splitledger.wsgi.application'
 
-# ── Database ────────────────────────────────────────────────────────────────
-# Uses MySQL via mysqlclient. Credentials loaded from .env.
-# STRICT_TRANS_TABLES prevents silent data truncation.
+# If DATABASE_URL is not provided, try to build it from MySQL env variables,
+# or fall back to SQLite for local development.
+db_url = os.getenv('DATABASE_URL')
+if not db_url:
+    db_name = os.getenv('DB_NAME')
+    db_user = os.getenv('DB_USER')
+    db_password = os.getenv('DB_PASSWORD', '')
+    db_host = os.getenv('DB_HOST', '127.0.0.1')
+    db_port = os.getenv('DB_PORT', '3306')
+    if db_name and db_user:
+        # Encode password to handle special characters in connection URL
+        from urllib.parse import quote_plus
+        db_password_encoded = quote_plus(db_password)
+        db_url = f"mysql://{db_user}:{db_password_encoded}@{db_host}:{db_port}/{db_name}"
+    else:
+        db_url = f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', 'splitledger'),
-        'USER': os.getenv('DB_USER', 'root'),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
-        'PORT': os.getenv('DB_PORT', '3306'),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-        'CONN_MAX_AGE': 600,  # Reuse connections for up to 10 minutes
-    }
+    "default": dj_database_url.parse(db_url)
 }
 
 # ── Password validation ────────────────────────────────────────────────────
@@ -109,6 +117,9 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # For collectstatic in production
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = (
+"whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
 
 # ── Media files (CSV uploads) ──────────────────────────────────────────────
 
