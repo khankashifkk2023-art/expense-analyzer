@@ -93,7 +93,6 @@ if not db_url:
 DATABASES = {
     "default": dj_database_url.parse(db_url)
 }
-
 # ── Password validation ────────────────────────────────────────────────────
 
 AUTH_PASSWORD_VALIDATORS = [
