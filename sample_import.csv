@@ -1,0 +1,11 @@
+date,description,amount,currency,paid_by,split_type,notes
+2026-06-01,Groceries at Supermarket,1500.00,INR,john,equal,Weekly shopping
+2026-06-02,Electricity Bill May,850.50,INR,jane,equal,May 2026 bill
+2026-06-03,Internet Bill,699.00,INR,john,equal,Monthly broadband
+2026-06-05,Restaurant Dinner,2400.00,INR,mike,equal,Birthday celebration
+2026-06-07,Uber to Airport,450.00,INR,jane,equal,
+2026-06-10,House Cleaning Service,800.00,INR,john,equal,Monthly cleaning
+2026-06-12,Gas Cylinder,950.00,INR,mike,equal,Kitchen gas
+2026-06-15,Milk and Vegetables,320.00,INR,jane,equal,Daily groceries
+2026-06-18,Water Bill,180.00,INR,john,equal,Q2 2026
+2026-06-20,Pizza Night,1250.00,INR,mike,equal,Weekend treat

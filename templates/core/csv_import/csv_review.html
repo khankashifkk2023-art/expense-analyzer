@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Review Import — {{ group.name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Review CSV Import</h1>
+    <p class="page-subtitle">{{ import_session.file_name }}</p>
+</div>
+
+<div class="stats-grid mb-xl">
+    <div class="stat-card">
+        <div class="stat-value">{{ import_session.total_rows }}</div>
+        <div class="stat-label">Total Rows</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value balance-positive">{{ import_session.clean_rows }}</div>
+        <div class="stat-label">Clean Rows</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value balance-negative">{{ import_session.flagged_rows }}</div>
+        <div class="stat-label">Flagged Rows</div>
+    </div>
+</div>
+
+{% if anomalies %}
+<h2>Flagged Issues</h2>
+<p class="text-warning mb-md">The following rows have potential issues. Review before importing.</p>
+
+{% for anomaly in anomalies %}
+<div class="anomaly-card anomaly-{{ anomaly.anomaly_type }}">
+    <div class="anomaly-header">
+        <span class="anomaly-type badge badge-warning">Row {{ anomaly.row_number }}: {{ anomaly.get_anomaly_type_display }}</span>
+    </div>
+    <p><strong>Issue:</strong> {{ anomaly.description }}</p>
+    {% if anomaly.suggestion %}
+    <p class="anomaly-suggestion">💡 {{ anomaly.suggestion }}</p>
+    {% endif %}
+    <div class="anomaly-row-data">{{ anomaly.raw_row }}</div>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="btn-group mt-xl">
+    <form method="post" action="{% url 'core:csv_finalize' group.id import_session.id %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Import Clean Rows ({{ import_session.clean_rows }})</button>
+    </form>
+    <form method="post" action="{% url 'core:csv_cancel' group.id import_session.id %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline">Cancel Import</button>
+    </form>
+</div>
+{% endblock %}

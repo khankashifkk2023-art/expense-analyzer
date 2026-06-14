@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Remove Member — SplitLedger{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Remove Member</h1>
+</div>
+
+<div class="card-static" style="max-width: 600px; margin: 0 auto;">
+    <h2>Confirm Removal</h2>
+    <p>Mark <strong>{{ membership.user.username }}</strong> as having left <strong>{{ group.name }}</strong>?</p>
+    <p class="text-muted">This will set their leave date to today. They will no longer be included in new expense splits.</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="btn-group mt-lg">
+            <button type="submit" class="btn btn-warning">Remove Member</button>
+            <a href="{% url 'core:group_detail' group.id %}" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

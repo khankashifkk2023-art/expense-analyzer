@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load core_filters %}
+
+{% block title %}Settlements — {{ group.name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>Settlements — {{ group.name }}</h1>
+        <p class="page-subtitle">Payment history between members</p>
+    </div>
+    <a href="{% url 'core:settlement_create' group.id %}" class="btn btn-primary">+ Record Settlement</a>
+</div>
+
+{% if settlements %}
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Amount</th>
+                <th>Note</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for settlement in settlements %}
+            <tr>
+                <td>{{ settlement.date }}</td>
+                <td>{{ settlement.paid_by.username }}</td>
+                <td>→ {{ settlement.paid_to.username }}</td>
+                <td>{{ settlement.amount_inr|currency }}</td>
+                <td>{{ settlement.note|truncatewords:10 }}</td>
+                <td>
+                    <a href="{% url 'core:settlement_delete' group.id settlement.id %}" class="btn btn-sm btn-ghost text-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <div class="empty-state-icon">💰</div>
+    <h2 class="empty-state-title">No settlements yet</h2>
+    <p class="empty-state-text">Record payments between members to settle debts.</p>
+    <a href="{% url 'core:settlement_create' group.id %}" class="btn btn-primary btn-lg">Record Settlement</a>
+</div>
+{% endif %}
+{% endblock %}

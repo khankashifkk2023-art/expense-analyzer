@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Group — SplitLedger{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Delete Group</h1>
+</div>
+
+<div class="card-static" style="max-width: 600px; margin: 0 auto;">
+    <h2>Are you sure?</h2>
+    <p>You are about to delete the group <strong>{{ group.name }}</strong>.</p>
+    <p class="text-danger">This will delete all expenses, splits, settlements, and import history associated with this group. This action cannot be undone.</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="btn-group mt-lg">
+            <button type="submit" class="btn btn-danger">Delete Group</button>
+            <a href="{% url 'core:group_detail' group.id %}" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

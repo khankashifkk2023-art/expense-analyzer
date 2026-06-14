@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load core_filters %}
+
+{% block title %}Delete Expense — SplitLedger{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Delete Expense</h1>
+</div>
+
+<div class="card-static" style="max-width: 600px; margin: 0 auto;">
+    <h2>Are you sure?</h2>
+    <p>You are about to delete the expense:</p>
+    <ul>
+        <li><strong>Description:</strong> {{ expense.description }}</li>
+        <li><strong>Amount:</strong> {{ expense.amount_inr|currency }}</li>
+        <li><strong>Date:</strong> {{ expense.date }}</li>
+        <li><strong>Paid By:</strong> {{ expense.paid_by.username }}</li>
+    </ul>
+    <p class="text-danger">This will also delete all split records. This action cannot be undone.</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="btn-group mt-lg">
+            <button type="submit" class="btn btn-danger">Delete Expense</button>
+            <a href="{% url 'core:expense_detail' group.id expense.id %}" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

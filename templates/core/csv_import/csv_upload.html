@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}CSV Import — {{ group.name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Import Expenses from CSV</h1>
+    <p class="page-subtitle">{{ group.name }}</p>
+</div>
+
+<div class="grid-2">
+    <div class="card-static">
+        <h2>Upload CSV File</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.file.id_for_label }}" class="form-label">CSV File</label>
+                {{ form.file }}
+                {% if form.file.errors %}{{ form.file.errors }}{% endif %}
+                <p class="form-hint">Maximum file size: 5 MB</p>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Upload & Review</button>
+        </form>
+    </div>
+    
+    <div class="card-static">
+        <h2>CSV Format</h2>
+        <p>Your CSV should have these columns:</p>
+        <ul>
+            <li><strong>date</strong> — YYYY-MM-DD format</li>
+            <li><strong>description</strong> — Expense description</li>
+            <li><strong>amount</strong> — Decimal number</li>
+            <li><strong>currency</strong> — INR or USD</li>
+            <li><strong>paid_by</strong> — Username</li>
+            <li><strong>split_type</strong> — equal, percentage, exact, or shares</li>
+            <li><strong>notes</strong> — Optional notes</li>
+        </ul>
+        
+        <h3 class="mt-lg">Split Types:</h3>
+        
+        <p class="text-muted mt-md"><strong>1. Equal Split (Default):</strong></p>
+        <pre class="anomaly-row-data">date,description,amount,currency,paid_by,split_type
+2026-06-01,Groceries,1500.00,INR,john,equal</pre>
+        
+        <p class="text-muted mt-md"><strong>2. Percentage Split:</strong></p>
+        <pre class="anomaly-row-data">date,description,amount,paid_by,split_type,john_percentage,jane_percentage
+2026-06-01,Rent,30000,john,percentage,40,60</pre>
+        
+        <p class="text-muted mt-md"><strong>3. Exact Amount Split:</strong></p>
+        <pre class="anomaly-row-data">date,description,amount,paid_by,split_type,john_amount,jane_amount
+2026-06-01,Dinner,2000,john,exact,1200,800</pre>
+        
+        <p class="text-muted mt-md"><strong>4. Shares/Ratio Split:</strong></p>
+        <pre class="anomaly-row-data">date,description,amount,paid_by,split_type,john_shares,jane_shares
+2026-06-01,Hotel,6000,john,shares,2,1</pre>
+        
+        <p class="mt-lg">
+            <a href="/static/sample_import.csv" class="btn btn-sm btn-outline" download>📥 Download Equal Split Sample</a>
+        </p>
+        <p class="text-muted mt-sm">See <strong>CSV_IMPORT_GUIDE.md</strong> for detailed examples of all split types.</p>
+    </div>
+</div>
+{% endblock %}

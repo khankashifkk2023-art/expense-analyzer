@@ -1,0 +1,6 @@
+date,description,amount,currency,paid_by,split_type,john_amount,jane_amount,mike_amount,notes
+2026-06-01,Restaurant Bill,2500.00,INR,john,exact,1200.00,800.00,500.00,Based on what each ordered
+2026-06-05,Shopping Trip,3000.00,INR,jane,exact,1000.00,1500.00,500.00,Personal items included
+2026-06-10,Medical Expenses,1800.00,INR,mike,exact,600.00,600.00,600.00,Equal split
+2026-06-15,Taxi Fare,900.00,INR,john,exact,400.00,300.00,200.00,Based on distance traveled
+2026-06-20,Movie Tickets,1500.00,INR,jane,exact,500.00,500.00,500.00,Equal tickets

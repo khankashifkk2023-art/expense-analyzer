@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ action }} Member — SplitLedger{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ action }} Member to {{ group.name }}</h1>
+</div>
+
+<div class="card-static" style="max-width: 600px; margin: 0 auto;">
+    <form method="post" novalidate>
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.user.id_for_label }}" class="form-label">User</label>
+            {{ form.user }}
+            {% if form.user.errors %}{{ form.user.errors }}{% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.date_joined.id_for_label }}" class="form-label">Join Date</label>
+            {{ form.date_joined }}
+            {% if form.date_joined.errors %}{{ form.date_joined.errors }}{% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.date_left.id_for_label }}" class="form-label">Leave Date (Optional)</label>
+            {{ form.date_left }}
+            {% if form.date_left.errors %}{{ form.date_left.errors }}{% endif %}
+        </div>
+        
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">{{ action }} Member</button>
+            <a href="{% url 'core:group_detail' group.id %}" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

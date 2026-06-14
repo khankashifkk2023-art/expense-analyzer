@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load core_filters %}
+
+{% block title %}{{ balance_user.username }} Balance — {{ group.name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ balance_user.username }}'s Balance</h1>
+    <p class="page-subtitle">Detailed breakdown for {{ group.name }}</p>
+</div>
+
+<div class="stats-grid mb-xl">
+    <div class="stat-card">
+        <div class="stat-value balance-positive">{{ total_paid|currency }}</div>
+        <div class="stat-label">Total Paid</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value balance-negative">{{ total_owed|currency }}</div>
+        <div class="stat-label">Total Owed</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value balance-{{ net_balance|balance_color }}">{{ net_balance|currency }}</div>
+        <div class="stat-label">Net Balance</div>
+    </div>
+</div>
+
+<h2>Expenses Paid</h2>
+<div class="table-container mb-xl">
+    <table>
+        <thead>
+            <tr><th>Date</th><th>Description</th><th>Amount</th></tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses_paid %}
+            <tr>
+                <td>{{ expense.date }}</td>
+                <td>{{ expense.description }}</td>
+                <td>{{ expense.amount_inr|currency }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3" class="text-center text-muted">No expenses paid</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<h2>Expenses Owed</h2>
+<div class="table-container mb-xl">
+    <table>
+        <thead>
+            <tr><th>Date</th><th>Description</th><th>Paid By</th><th>Your Share</th></tr>
+        </thead>
+        <tbody>
+            {% for split in expenses_owed %}
+            <tr>
+                <td>{{ split.expense.date }}</td>
+                <td>{{ split.expense.description }}</td>
+                <td>{{ split.expense.paid_by.username }}</td>
+                <td>{{ split.share_amount|currency }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="text-center text-muted">No expenses owed</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<a href="{% url 'core:balance_view' group.id %}" class="btn btn-outline">Back to Balances</a>
+{% endblock %}

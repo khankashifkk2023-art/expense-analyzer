@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load core_filters %}
+
+{% block title %}Delete Settlement — SplitLedger{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Delete Settlement</h1>
+</div>
+
+<div class="card-static" style="max-width: 600px; margin: 0 auto;">
+    <h2>Are you sure?</h2>
+    <p>You are about to delete this settlement:</p>
+    <ul>
+        <li><strong>From:</strong> {{ settlement.paid_by.username }}</li>
+        <li><strong>To:</strong> {{ settlement.paid_to.username }}</li>
+        <li><strong>Amount:</strong> {{ settlement.amount_inr|currency }}</li>
+        <li><strong>Date:</strong> {{ settlement.date }}</li>
+    </ul>
+    <p class="text-danger">This action cannot be undone.</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="btn-group mt-lg">
+            <button type="submit" class="btn btn-danger">Delete Settlement</button>
+            <a href="{% url 'core:settlement_list' group.id %}" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

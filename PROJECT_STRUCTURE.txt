@@ -1,0 +1,347 @@
+SplitLedger Project Structure
+=============================
+
+expense/                                    # Project Root
+│
+├── 📄 manage.py                            # Django CLI tool
+├── 📄 setup.py                             # Automated setup script
+├── 📄 requirements.txt                     # Python dependencies
+│
+├── 📄 .env                                 # Environment variables (SECRET)
+├── 📄 .env.example                         # Environment template
+├── 📄 .gitignore                           # Git ignore rules
+│
+├── 📄 README.md                            # Complete documentation
+├── 📄 TECH.md                              # Technology stack guide
+├── 📄 QUICKSTART.md                        # 5-minute setup guide
+├── 📄 IMPLEMENTATION_SUMMARY.md            # Implementation details
+├── 📄 PROJECT_STRUCTURE.txt                # This file
+│
+├── 📄 sample_import.csv                    # Example CSV for testing
+├── 📄 expenses_export.csv                  # Sample data file
+│
+├── 📁 splitledger/                         # Main Django Project
+│   ├── 📄 __init__.py
+│   ├── 📄 settings.py                      # Project configuration ⚙️
+│   ├── 📄 urls.py                          # Root URL routing 🔗
+│   ├── 📄 wsgi.py                          # WSGI application entry
+│   ├── 📄 asgi.py                          # ASGI application entry (async)
+│   └── 📁 __pycache__/
+│
+├── 📁 core/                                # Main Application
+│   ├── 📄 __init__.py
+│   ├── 📄 apps.py                          # App configuration
+│   │
+│   ├── 📄 models.py                        # 7 Database Models 🗄️
+│   │   ├── ExpenseGroup
+│   │   ├── GroupMembership
+│   │   ├── Expense
+│   │   ├── ExpenseSplit
+│   │   ├── Settlement
+│   │   ├── ImportSession
+│   │   └── ImportAnomaly
+│   │
+│   ├── 📄 forms.py                         # 8 Django Forms 📝
+│   │   ├── UserRegistrationForm
+│   │   ├── UserLoginForm
+│   │   ├── GroupForm
+│   │   ├── MembershipForm
+│   │   ├── ExpenseForm
+│   │   ├── ExpenseSplitFormSet
+│   │   ├── SettlementForm
+│   │   └── CSVUploadForm
+│   │
+│   ├── 📄 admin.py                         # Admin interface config 👨‍💼
+│   ├── 📄 urls.py                          # App URL routing (24 routes)
+│   │
+│   ├── 📁 views/                           # View Logic (6 modules) 🎯
+│   │   ├── 📄 __init__.py
+│   │   ├── 📄 auth_views.py               # Authentication (3 views)
+│   │   ├── 📄 group_views.py              # Groups & Members (7 views)
+│   │   ├── 📄 expense_views.py            # Expenses CRUD (5 views)
+│   │   ├── 📄 balance_views.py            # Balance calculations (2 views)
+│   │   ├── 📄 settlement_views.py         # Settlements (3 views)
+│   │   └── 📄 csv_import_views.py         # CSV import (4 views)
+│   │
+│   ├── 📁 services/                        # Business Logic
+│   │   ├── 📄 __init__.py
+│   │   └── 📁 csv_import/
+│   │       └── 📄 __init__.py              # CSV parsing service 📊
+│   │
+│   ├── 📁 templatetags/                    # Custom Template Filters
+│   │   ├── 📄 __init__.py
+│   │   ├── 📄 core_filters.py             # Currency & balance filters 💰
+│   │   └── 📁 __pycache__/
+│   │
+│   ├── 📁 migrations/                      # Database Migrations
+│   │   ├── 📄 __init__.py
+│   │   └── 📄 0001_initial.py             # Initial migration (7 tables)
+│   │
+│   ├── 📁 tests/                           # Test Suite (placeholder)
+│   │   └── 📄 __init__.py
+│   │
+│   └── 📁 __pycache__/
+│
+├── 📁 templates/                           # HTML Templates (20+ files)
+│   ├── 📄 base.html                        # Base template with nav/footer
+│   │
+│   └── 📁 core/
+│       ├── 📁 auth/                        # Authentication Templates 🔐
+│       │   ├── 📄 login.html
+│       │   └── 📄 register.html
+│       │
+│       ├── 📁 groups/                      # Group Management Templates 👥
+│       │   ├── 📄 group_list.html
+│       │   ├── 📄 group_form.html
+│       │   ├── 📄 group_detail.html
+│       │   ├── 📄 group_confirm_delete.html
+│       │   ├── 📄 member_form.html
+│       │   └── 📄 member_confirm_remove.html
+│       │
+│       ├── 📁 expenses/                    # Expense Templates 💸
+│       │   ├── 📄 expense_list.html
+│       │   ├── 📄 expense_form.html
+│       │   ├── 📄 expense_detail.html
+│       │   └── 📄 expense_confirm_delete.html
+│       │
+│       ├── 📁 balances/                    # Balance Templates ⚖️
+│       │   ├── 📄 balance_view.html
+│       │   └── 📄 user_balance_detail.html
+│       │
+│       ├── 📁 settlements/                 # Settlement Templates 💰
+│       │   ├── 📄 settlement_list.html
+│       │   ├── 📄 settlement_form.html
+│       │   └── 📄 settlement_confirm_delete.html
+│       │
+│       └── 📁 csv_import/                  # CSV Import Templates 📁
+│           ├── 📄 csv_upload.html
+│           └── 📄 csv_review.html
+│
+├── 📁 static/                              # Static Assets
+│   ├── 📁 css/
+│   │   └── 📄 style.css                    # Complete design system (800+ lines) 🎨
+│   │       ├── CSS Variables
+│   │       ├── Reset & Base styles
+│   │       ├── Typography
+│   │       ├── Layout (container, grid)
+│   │       ├── Navbar with glassmorphism
+│   │       ├── Cards with hover effects
+│   │       ├── Buttons (6+ variants)
+│   │       ├── Forms (styled inputs)
+│   │       ├── Flash messages
+│   │       ├── Tables
+│   │       ├── Badges
+│   │       ├── Balance indicators
+│   │       ├── Empty states
+│   │       ├── Anomaly cards
+│   │       ├── Footer
+│   │       ├── Utilities
+│   │       ├── Animations
+│   │       ├── Scrollbar styling
+│   │       └── Responsive breakpoints
+│   │
+│   └── 📁 js/
+│       └── 📄 main.js                      # Vanilla JavaScript utilities ⚡
+│           ├── Mobile nav toggle
+│           ├── Flash message auto-dismiss
+│           ├── Confirm dialogs
+│           └── Currency input formatting
+│
+├── 📁 media/                               # User Uploads (CSV files)
+│   └── imports/                            # CSV import files
+│
+└── 📁 staticfiles/                         # Collected static files (production)
+
+
+Database Schema
+===============
+
+┌─────────────────┐
+│ auth_user       │
+│ (Django built-in)│
+└────────┬────────┘
+         │
+         ├──────────────────────┬──────────────────────┐
+         │                      │                      │
+         ▼                      ▼                      ▼
+┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐
+│ expense_groups   │  │ group_members    │  │ expenses         │
+├──────────────────┤  ├──────────────────┤  ├──────────────────┤
+│ id (PK)          │  │ id (PK)          │  │ id (PK)          │
+│ name             │◄─┤ group_id (FK)    │  │ group_id (FK)    ├─┐
+│ description      │  │ user_id (FK)     ├─►│ paid_by (FK)     │ │
+│ created_by (FK)  ├─►│ date_joined      │  │ date             │ │
+│ created_at       │  │ date_left        │  │ description      │ │
+│ updated_at       │  └──────────────────┘  │ amount_original  │ │
+└──────────────────┘                        │ currency         │ │
+                                             │ amount_inr       │ │
+         ┌───────────────────────────────────┤ conversion_rate  │ │
+         │                                   │ split_type       │ │
+         │                                   │ is_settlement    │ │
+         │                                   │ notes            │ │
+         │                                   └──────────────────┘ │
+         │                                            │           │
+         │                                            │           │
+         ▼                                            ▼           │
+┌──────────────────┐                        ┌──────────────────┐ │
+│ settlements      │                        │ expense_splits   │ │
+├──────────────────┤                        ├──────────────────┤ │
+│ id (PK)          │                        │ id (PK)          │ │
+│ group_id (FK)    │                        │ expense_id (FK)  ├─┘
+│ paid_by (FK)     │                        │ user_id (FK)     │
+│ paid_to (FK)     │                        │ share_amount     │
+│ amount           │                        │ raw_value        │
+│ currency         │                        └──────────────────┘
+│ amount_inr       │
+│ date             │
+│ note             │
+└──────────────────┘
+
+         ┌───────────────────────────────────┐
+         │                                   │
+         ▼                                   ▼
+┌──────────────────┐              ┌──────────────────┐
+│ import_sessions  │              │ import_anomalies │
+├──────────────────┤              ├──────────────────┤
+│ id (PK)          │◄─────────────┤ session_id (FK)  │
+│ group_id (FK)    │              │ row_number       │
+│ file_name        │              │ raw_row (JSON)   │
+│ file             │              │ anomaly_type     │
+│ uploaded_by (FK) │              │ description      │
+│ uploaded_at      │              │ suggestion       │
+│ status           │              │ resolution       │
+│ total_rows       │              │ resolved_by (FK) │
+│ clean_rows       │              │ resolved_at      │
+│ flagged_rows     │              └──────────────────┘
+│ imported_rows    │
+│ report_summary   │
+└──────────────────┘
+
+
+URL Routing Map
+===============
+
+/admin/                                     → Django Admin Panel
+/auth/
+  ├── register/                             → User Registration
+  ├── login/                                → User Login
+  └── logout/                               → User Logout
+
+/groups/                                    → Group List (Dashboard)
+  ├── create/                               → Create Group
+  └── <group_id>/
+      ├── (root)                            → Group Detail
+      ├── edit/                             → Edit Group
+      ├── delete/                           → Delete Group
+      ├── members/
+      │   ├── add/                          → Add Member
+      │   └── <membership_id>/remove/       → Remove Member
+      ├── expenses/
+      │   ├── (root)                        → Expense List
+      │   ├── create/                       → Create Expense
+      │   └── <expense_id>/
+      │       ├── (root)                    → Expense Detail
+      │       ├── edit/                     → Edit Expense
+      │       └── delete/                   → Delete Expense
+      ├── balances/
+      │   ├── (root)                        → Balance View
+      │   └── <user_id>/                    → User Balance Detail
+      ├── settlements/
+      │   ├── (root)                        → Settlement List
+      │   ├── create/                       → Create Settlement
+      │   └── <settlement_id>/delete/       → Delete Settlement
+      └── import/
+          ├── (root)                        → CSV Upload
+          └── <session_id>/
+              ├── review/                   → Review Import
+              ├── finalize/                 → Finalize Import
+              └── cancel/                   → Cancel Import
+
+
+Feature Flow Diagrams
+=====================
+
+User Registration & Login Flow:
+┌─────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+│ Landing │───►│ Register │───►│  Login   │───►│Dashboard │
+└─────────┘    └──────────┘    └──────────┘    └──────────┘
+
+Expense Creation Flow:
+┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+│  Group   │───►│   Add    │───►│ Configure│───►│  Split   │
+│  Detail  │    │ Expense  │    │  Amount  │    │  Among   │
+└──────────┘    └──────────┘    └──────────┘    └──────────┘
+
+Balance Settlement Flow:
+┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+│  View    │───►│ See Who  │───►│  Record  │───►│ Updated  │
+│ Balances │    │ Owes Who │    │Settlement│    │ Balances │
+└──────────┘    └──────────┘    └──────────┘    └──────────┘
+
+CSV Import Flow:
+┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+│  Upload  │───►│  Parse & │───►│  Review  │───►│  Import  │
+│   CSV    │    │ Validate │    │ Anomalies│    │  Clean   │
+└──────────┘    └──────────┘    └──────────┘    └──────────┘
+
+
+Tech Stack Layers
+==================
+
+┌─────────────────────────────────────────────────────┐
+│              PRESENTATION LAYER                      │
+│  HTML5 + CSS3 + Vanilla JavaScript                  │
+│  • Glassmorphism Design                             │
+│  • Responsive Mobile-First                          │
+│  • Dark Theme with Vibrant Accents                  │
+└─────────────────────────────────────────────────────┘
+                        ▼
+┌─────────────────────────────────────────────────────┐
+│               APPLICATION LAYER                      │
+│  Django 6.0 Web Framework                           │
+│  • Views (Authentication, CRUD, Business Logic)     │
+│  • Forms (Validation & Rendering)                   │
+│  • URL Routing                                      │
+│  • Template Rendering                               │
+└─────────────────────────────────────────────────────┘
+                        ▼
+┌─────────────────────────────────────────────────────┐
+│               BUSINESS LOGIC LAYER                   │
+│  Services & Algorithms                              │
+│  • Balance Calculation                              │
+│  • Split Type Processing                            │
+│  • CSV Import & Validation                          │
+│  • Settlement Suggestions                           │
+└─────────────────────────────────────────────────────┘
+                        ▼
+┌─────────────────────────────────────────────────────┐
+│                  DATA LAYER                          │
+│  Django ORM + MySQL Database                        │
+│  • 7 Core Models                                    │
+│  • Foreign Key Relationships                        │
+│  • Migrations                                       │
+└─────────────────────────────────────────────────────┘
+
+
+File Size Summary
+=================
+
+Component               Files    Lines      Purpose
+────────────────────────────────────────────────────────
+Models                    1       ~300      Database schema
+Forms                     1       ~200      User input validation
+Views                     6       ~800      Request handling
+URLs                      2       ~100      Route mapping
+Templates                20+     ~1,500     HTML pages
+CSS                       1       ~800      Design system
+JavaScript                1        ~80      Client utilities
+Services                  1       ~150      Business logic
+Documentation             4      ~1,000     User & dev guides
+────────────────────────────────────────────────────────
+TOTAL                   37+     ~5,000+    Complete App
+
+
+═══════════════════════════════════════════════════════
+  SplitLedger — Built with Django 6.0
+  Last Updated: June 14, 2026
+═══════════════════════════════════════════════════════

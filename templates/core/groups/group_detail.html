@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load core_filters %}
+
+{% block title %}{{ group.name }} — SplitLedger{% endblock %}
+
+{% block nav_extra %}
+<a href="{% url 'core:expense_list' group.id %}" class="nav-link">Expenses</a>
+<a href="{% url 'core:balance_view' group.id %}" class="nav-link">Balances</a>
+<a href="{% url 'core:settlement_list' group.id %}" class="nav-link">Settlements</a>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>{{ group.name }}</h1>
+        {% if group.description %}
+        <p class="page-subtitle">{{ group.description }}</p>
+        {% endif %}
+    </div>
+    <div class="btn-group">
+        {% if is_creator %}
+        <a href="{% url 'core:group_edit' group.id %}" class="btn btn-outline btn-sm">Edit</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="grid-2 mb-xl">
+    <div class="card-static">
+        <h2 class="card-title">Quick Actions</h2>
+        <div class="btn-group">
+            <a href="{% url 'core:expense_create' group.id %}" class="btn btn-primary btn-block">+ Add Expense</a>
+            <a href="{% url 'core:balance_view' group.id %}" class="btn btn-success btn-block">View Balances</a>
+            <a href="{% url 'core:settlement_create' group.id %}" class="btn btn-outline btn-block">Record Settlement</a>
+            <a href="{% url 'core:csv_upload' group.id %}" class="btn btn-outline btn-block">Import CSV</a>
+        </div>
+    </div>
+    
+    <div class="card-static">
+        <h2 class="card-title">Stats</h2>
+        <div class="stats-grid">
+            <div>
+                <div class="stat-value">{{ active_members.count }}</div>
+                <div class="stat-label">Active Members</div>
+            </div>
+            <div>
+                <div class="stat-value">{{ recent_expenses.count }}</div>
+                <div class="stat-label">Total Expenses</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Active Members</h2>
+<div class="table-container mb-xl">
+    <table>
+        <thead>
+            <tr>
+                <th>Member</th>
+                <th>Joined</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for membership in active_members %}
+            <tr>
+                <td>{{ membership.user.username }}</td>
+                <td>{{ membership.date_joined }}</td>
+                <td>
+                    <a href="{% url 'core:user_balance_detail' group.id membership.user.id %}" class="btn btn-sm btn-ghost">View Balance</a>
+                    {% if is_creator or membership.user == user %}
+                    <a href="{% url 'core:member_remove' group.id membership.id %}" class="btn btn-sm btn-ghost text-danger">Remove</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3" class="text-center text-muted">No active members</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if is_creator or is_member %}
+<a href="{% url 'core:member_add' group.id %}" class="btn btn-outline mb-xl">+ Add Member</a>
+{% endif %}
+
+{% if recent_expenses %}
+<h2>Recent Expenses</h2>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Paid By</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in recent_expenses %}
+            <tr>
+                <td>{{ expense.date }}</td>
+                <td><a href="{% url 'core:expense_detail' group.id expense.id %}">{{ expense.description }}</a></td>
+                <td>{{ expense.amount_inr|currency }}</td>
+                <td>{{ expense.paid_by.username }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<a href="{% url 'core:expense_list' group.id %}" class="btn btn-outline mt-md">View All Expenses</a>
+{% endif %}
+{% endblock %}

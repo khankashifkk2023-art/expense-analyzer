@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}My Groups — SplitLedger{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>My Groups</h1>
+        <p class="page-subtitle">Manage your shared expense groups</p>
+    </div>
+    <a href="{% url 'core:group_create' %}" class="btn btn-primary">+ Create Group</a>
+</div>
+
+{% if member_groups %}
+<h2>Active Groups</h2>
+<div class="grid-3 mb-xl">
+    {% for group in member_groups %}
+    <div class="card animate-fade-in">
+        <h3 class="card-title">{{ group.name }}</h3>
+        {% if group.description %}
+        <p class="text-muted">{{ group.description|truncatewords:20 }}</p>
+        {% endif %}
+        <div class="flex-between mt-md">
+            <span class="text-muted">{{ group.memberships.count }} members</span>
+            <a href="{% url 'core:group_detail' group.id %}" class="btn btn-sm btn-outline">View</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if created_groups %}
+<h2>Past Groups</h2>
+<div class="grid-3">
+    {% for group in created_groups %}
+    <div class="card animate-fade-in" style="opacity: 0.7;">
+        <h3 class="card-title">{{ group.name }}</h3>
+        {% if group.description %}
+        <p class="text-muted">{{ group.description|truncatewords:20 }}</p>
+        {% endif %}
+        <div class="flex-between mt-md">
+            <span class="badge badge-muted">Inactive</span>
+            <a href="{% url 'core:group_detail' group.id %}" class="btn btn-sm btn-ghost">View</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if not member_groups and not created_groups %}
+<div class="empty-state">
+    <div class="empty-state-icon">📊</div>
+    <h2 class="empty-state-title">No groups yet</h2>
+    <p class="empty-state-text">Create your first group to start tracking shared expenses.</p>
+    <a href="{% url 'core:group_create' %}" class="btn btn-primary btn-lg">Create Your First Group</a>
+</div>
+{% endif %}
+{% endblock %}

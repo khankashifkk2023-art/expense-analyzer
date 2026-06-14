@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load core_filters %}
+
+{% block title %}{{ expense.description }} — SplitLedger{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ expense.description }}</h1>
+    <div class="btn-group">
+        <a href="{% url 'core:expense_edit' group.id expense.id %}" class="btn btn-outline btn-sm">Edit</a>
+        <a href="{% url 'core:expense_delete' group.id expense.id %}" class="btn btn-danger btn-sm">Delete</a>
+    </div>
+</div>
+
+<div class="grid-2 mb-xl">
+    <div class="card-static">
+        <h2>Expense Details</h2>
+        <table style="width: 100%;">
+            <tr><td><strong>Date:</strong></td><td>{{ expense.date }}</td></tr>
+            <tr><td><strong>Amount:</strong></td><td>{{ expense.currency }} {{ expense.amount_original }}</td></tr>
+            <tr><td><strong>Amount (INR):</strong></td><td>{{ expense.amount_inr|currency }}</td></tr>
+            <tr><td><strong>Paid By:</strong></td><td>{{ expense.paid_by.username }}</td></tr>
+            <tr><td><strong>Split Type:</strong></td><td>{{ expense.get_split_type_display }}</td></tr>
+            {% if expense.notes %}<tr><td><strong>Notes:</strong></td><td>{{ expense.notes }}</td></tr>{% endif %}
+        </table>
+    </div>
+    
+    <div class="card-static">
+        <h2>Split Breakdown</h2>
+        {% for split in splits %}
+        <div class="flex-between mb-sm">
+            <span>{{ split.user.username }}</span>
+            <span class="balance-positive">{{ split.share_amount|currency }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<a href="{% url 'core:expense_list' group.id %}" class="btn btn-outline">Back to Expenses</a>
+{% endblock %}

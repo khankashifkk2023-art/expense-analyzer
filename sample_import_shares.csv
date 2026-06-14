@@ -1,0 +1,6 @@
+date,description,amount,currency,paid_by,split_type,john_shares,jane_shares,mike_shares,notes
+2026-06-01,Hotel Room,6000.00,INR,john,shares,2,1,1,John and partner (2 people) vs singles
+2026-06-05,Car Rental,4000.00,INR,jane,shares,3,2,1,Based on usage frequency
+2026-06-10,Storage Unit,3000.00,INR,mike,shares,2,1,2,Based on space used
+2026-06-15,Parking Spot,1500.00,INR,john,shares,1,1,1,Equal shares
+2026-06-20,Gym Membership,9000.00,INR,jane,shares,3,2,1,John goes most, Mike least

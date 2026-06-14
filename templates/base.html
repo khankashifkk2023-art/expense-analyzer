@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SplitLedger — Shared expense tracking for flatmates and groups">
+    <title>{% block title %}SplitLedger{% endblock %}</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- ── Navigation ─────────────────────────────────────────── -->
+    <nav class="navbar" id="main-nav">
+        <div class="nav-container">
+            <a href="{% url 'core:group_list' %}" class="nav-brand" id="nav-brand">
+                <span class="brand-icon">⚡</span>
+                <span class="brand-text">SplitLedger</span>
+            </a>
+
+            {% if user.is_authenticated %}
+            <div class="nav-links" id="nav-links">
+                <a href="{% url 'core:group_list' %}" class="nav-link" id="nav-groups">Groups</a>
+                {% block nav_extra %}{% endblock %}
+            </div>
+            <div class="nav-user" id="nav-user">
+                <span class="nav-username">{{ user.username }}</span>
+                <a href="{% url 'core:logout' %}" class="nav-link nav-logout" id="nav-logout">Logout</a>
+            </div>
+            {% else %}
+            <div class="nav-links">
+                <a href="{% url 'core:login' %}" class="nav-link" id="nav-login">Login</a>
+                <a href="{% url 'core:register' %}" class="nav-link btn-primary-sm" id="nav-register">Register</a>
+            </div>
+            {% endif %}
+
+            <!-- Mobile menu toggle -->
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ── Flash Messages ─────────────────────────────────────── -->
+    {% if messages %}
+    <div class="messages-container" id="messages-container">
+        {% for message in messages %}
+        <div class="message message-{{ message.tags }}" id="message-{{ forloop.counter }}">
+            <span class="message-text">{{ message }}</span>
+            <button class="message-close" onclick="this.parentElement.remove()" aria-label="Close">&times;</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- ── Main Content ───────────────────────────────────────── -->
+    <main class="main-content" id="main-content">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- ── Footer ─────────────────────────────────────────────── -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <p class="footer-text">SplitLedger &copy; 2026 — Built for flatmates who hate spreadsheets</p>
+        </div>
+    </footer>
+
+    {% load static %}
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

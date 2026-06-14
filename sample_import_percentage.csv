@@ -1,0 +1,6 @@
+date,description,amount,currency,paid_by,split_type,john_percentage,jane_percentage,mike_percentage,notes
+2026-06-01,Rent - Larger Room,30000.00,INR,john,percentage,40,30,30,John has bigger room
+2026-06-05,Dinner - John ate more,2400.00,INR,jane,percentage,50,30,20,John had extras
+2026-06-10,Utilities,1500.00,INR,mike,percentage,35,35,30,Based on usage
+2026-06-15,Groceries,2000.00,INR,john,percentage,40,35,25,Shared but John eats more
+2026-06-20,Internet upgrade,1200.00,INR,jane,percentage,45,30,25,John uses more bandwidth
