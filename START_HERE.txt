@@ -1,0 +1,96 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║          🚀 DEPLOY SPLITLEDGER TO PYTHONANYWHERE 🚀          ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+👋 Hi! Ready to deploy your app to the internet?
+
+Follow this simple process:
+
+
+📖 STEP 1: READ THE GUIDE
+═══════════════════════════════════════════════════════════════
+
+Open this file first:
+📄 PYTHONANYWHERE_DEPLOY.md
+
+It has EVERYTHING you need with screenshots and explanations!
+
+
+✅ STEP 2: USE THE CHECKLIST
+═══════════════════════════════════════════════════════════════
+
+Print or open side-by-side:
+📄 DEPLOY_CHECKLIST.txt
+
+Check off each step as you complete it!
+
+
+⏱️ TIME REQUIRED:
+═══════════════════════════════════════════════════════════════
+
+Total: 20-30 minutes
+  - Account setup: 2 minutes
+  - Clone repo: 2 minutes
+  - Install packages: 5 minutes
+  - Database setup: 3 minutes
+  - Django configuration: 8 minutes
+  - Web app setup: 5 minutes
+  - Testing: 5 minutes
+
+
+🎯 WHAT YOU'LL GET:
+═══════════════════════════════════════════════════════════════
+
+✅ Your site LIVE on the internet!
+✅ URL: https://yourusername.pythonanywhere.com
+✅ Works on any device (phone, tablet, computer)
+✅ Anyone can access it from anywhere
+✅ FREE forever (no credit card needed)
+
+
+📚 ALL THE FILES YOU NEED:
+═══════════════════════════════════════════════════════════════
+
+1. PYTHONANYWHERE_DEPLOY.md ⭐ MAIN GUIDE (start here!)
+2. DEPLOY_CHECKLIST.txt - Quick checklist
+3. production_settings_template.py - Django production config
+4. wsgi_pythonanywhere_template.py - WSGI file template
+
+
+🆘 IF YOU GET STUCK:
+═══════════════════════════════════════════════════════════════
+
+1. Check the "Troubleshooting" section in PYTHONANYWHERE_DEPLOY.md
+2. Look at error logs (Web tab → error.log)
+3. PythonAnywhere help: https://help.pythonanywhere.com/
+4. Forums: https://www.pythonanywhere.com/forums/
+
+
+💡 PRO TIPS:
+═══════════════════════════════════════════════════════════════
+
+✓ Have your GitHub repo open in another tab
+✓ Take notes of your MySQL password
+✓ Keep the checklist handy
+✓ Don't skip steps!
+✓ Test everything at the end
+
+
+🎉 LET'S GET STARTED!
+═══════════════════════════════════════════════════════════════
+
+1. Open: PYTHONANYWHERE_DEPLOY.md
+2. Follow step by step
+3. Your site will be live in 30 minutes!
+
+
+═══════════════════════════════════════════════════════════════
+
+Repository: https://github.com/afaquehk/expense-analyzer
+Your future site: https://yourusername.pythonanywhere.com
+
+Ready? Open PYTHONANYWHERE_DEPLOY.md and let's go! 🚀
+
+═══════════════════════════════════════════════════════════════
